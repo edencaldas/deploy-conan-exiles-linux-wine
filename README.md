@@ -10,7 +10,7 @@ You will end up with a functional Conan Exiles Dedicate Server running on Linux 
 
 ## Motivation for creating these scripts
 
-I could not find a reliable Docker image for conan Exiles, or create one myself. I would always run into, being either the server was not advertising to Funcom servers, or connections that require certificates would loop endelessly. Docker might be messing too much with the network stack for its containers, as the exact same setup works everywhere else. Regardless, LXC is a much beter fit for Conan Exiles. Whereas Dockers is made for app containerzation, LXC is made for full-blown VM-like containers. It's a perfect match for Conan Exiles.
+I could not find a reliable Docker image for conan Exiles, or create one myself. I would always run into either the server not advertising to Funcom servers, or connections that require certificates would loop endelessly. Docker might be messing too much with the network stack for its containers, as the exact same setup works everywhere else. Regardless, LXC is a much beter fit for Conan Exiles. Whereas Dockers is made for app containerzation, LXC is made for full-blown VM-like containers. It's a perfect match for Conan Exiles.
 
 Since the scripts work with LXC, they also do for VMs and baremetal machines.
 
@@ -21,13 +21,59 @@ Login to your VM/Container/Machine and execute the script as root.
 Alternatively, if using Cloud (eg: AWS) you can put the script in your instance's userdata.
 For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec yourcontainer -- bash``` ) and execute the script.
 
-## What the script will do.
+## The script will:
 
 - Install all required and usefl packages.
 - Download mcrcon and discord.sh for server management and discord messages.
 - Install steamcmd and download conan exiles with it.
 - Setup a systemd unit file called ```conan``` and start it.
 - Create a readme file with further instructions.
+
+## Installation Example
+
+```
+[ec2-user@host ~]$ lxc launch images:almalinux/8 almalinux
+Creating almalinux
+Starting almalinux                        
+[ec2-user@host ~]$ lxc exec almalinux -- bash
+[root@almalinux ~]# curl -sSOJ https://raw.githubusercontent.com/edencaldas/deploy-conan-exiles-linux-wine/main/deploy_conan_exiles_enterpriselinux8_wine.sh
+[root@almalinux ~]# chmod +x deploy_conan_exiles_enterpriselinux8_wine.sh
+[root@almalinux ~]# ./deploy_conan_exiles_enterpriselinux8_wine.sh 
+```
+
+After the process is done. Login as ```steam``` user and check wait for the ```LogServerStats: Sending report: exiles-stats?``` message to appear. That will mean the server is up and advertising to Funcom server browser screen.
+
+```
+[root@almalinux ~]# sudo -iu steam
+[steam@almalinux ~]$ tail -f exiles/ConanSandbox/Saved/Logs/ConanSandbox.log 
+...
+[2022.05.22-02.23.08:626][ 28]LogServerStats: Sending report: exiles-stats?players=0&=30.64%3A32.92%3A35.22&uptime=300&memory=11791499264%3A16653615104%3A4354953216%3A4360814592&cpu_time=6.579306%3A26.317225&npcailods=0%3A0%3A0%3A6501&buildingailods=0%3A0%3A0%3A0&placeableailods=0%3A0%3A0%3A4&ipv4=127.0.1.1&sport=7777
+...
+```
+
+### Firewall settings
+
+If installed on host. Open up ports:
+- 7777 UDP
+- 7778 UDP
+- 27015 UDP
+- 25575 TCP
+
+If installed on an LXC Container, redirect ports from host to container.
+
+```
+echo 1 > /proc/sys/net/ipv4/ip_forward
+	
+iptables -t nat -I PREROUTING -p udp --dport 7777 -j DNAT --to yourcontainerip
+iptables -t nat -I PREROUTING -p udp --dport 7778 -j DNAT --to yourcontainerip
+iptables -t nat -I PREROUTING -p udp --dport 27015 -j DNAT --to yourcontainerip
+iptables -t nat -I PREROUTING -p tcp --dport 25575 -j DNAT --to yourcontainerip
+	
+iptables -I FORWARD -d yourcontainerip -p udp --dport 7777 -j ACCEPT
+iptables -I FORWARD -d yourcontainerip -p udp --dport 7778 -j ACCEPT
+iptables -I FORWARD -d yourcontainerip -p udp --dport 27015 -j ACCEPT
+iptables -I FORWARD -d yourcontainerip -p udp --dport 25575 -j ACCEPT
+```
 
 ## Known issues
 
