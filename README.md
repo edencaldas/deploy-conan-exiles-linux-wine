@@ -53,7 +53,9 @@ After the process is done. Login as ```steam``` user and wait for the ```LogServ
 
 ### Firewall settings
 
-If installed on host. Open up ports:
+The script will disable firewalld. Comment that line if that's undesirable. 
+
+If installed on host with firewall on. Open up ports:
 - 7777 UDP
 - 7778 UDP
 - 27015 UDP
