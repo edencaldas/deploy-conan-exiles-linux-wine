@@ -13,13 +13,24 @@ dnf -y install wine
 useradd -s /bin/bash -m -U steam
 sudo -i -u steam bash << EOF
 cd /home/steam
+echo '
+export WINEARCH=win64
+export WINEPREFIX=/home/steam/.wine64
+' >> /home/steam/.bashrc
 export WINEPREFIX=/home/steam/.wine64
 export WINEARCH=win64
 winecfg
-wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" -qO- | tar --no-same-owner -xz
-/home/steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir /home/steam/exiles +login anonymous +app_update 443030 +exit
+# utilities
+test -d /home/steam/bin || mkdir -p /home/steam/bin
+wget https://github.com/Tiiffi/mcrcon/releases/download/v0.7.2/mcrcon-0.7.2-linux-x86-64.tar.gz -qO- | tar --no-same-owner -xz -C /home/steam/bin 
+wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" -qO- | tar --no-same-owner -xz 
+wget https://raw.githubusercontent.com/ChaoticWeg/discord.sh/master/discord.sh -P /home/steam/bin
+chmod +x /home/steam/bin/discord.sh
 printf '#!/bin/bash\nexport WINEARCH=win64\nexport WINEPREFIX=/home/steam/.wine64\nxvfb-run --auto-servernum --server-args='"'"'-screen 0 640x480x24:32'"'"' wine64 /home/steam/exiles/ConanSandboxServer.exe -log\n' > start_conan.sh
 chmod +x start_conan.sh
+# install the game
+wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" -qO- | tar --no-same-owner -xz
+/home/steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir /home/steam/exiles +login anonymous +app_update 443030 +exit
 EOF
 
 # post installation
