@@ -77,4 +77,4 @@ iptables -I FORWARD -d yourcontainerip -p udp --dport 25575 -j ACCEPT
 
 ## Known issues
 
-Not an issue with the script, but with Conan Exiles and Wine in general. When it gets around 7.2GB-8GB of RAM, the server crashes, no matter how much RAM you have in your system. This is a widespread issue with Linux + Wine + Conan Exiles and currently there is no fix. Meaning running Conan Exiles Server in Linux only viable for small population servers. I'd say up to 10. The daily reboot would happen in time to save the server from a crash.
+Not an issue with the script, but with Conan Exiles and Wine in general. When it gets around 7.2GB-8GB of RAM, the server crashes, no matter how much RAM you have in your system. This is a widespread issue with Linux + Wine + Conan Exiles and currently there is no fix. Meaning running Conan Exiles Server in Linux is only viable for small population servers. I'd say up to 10. The daily reboot would happen in time to save the server from a crash.
