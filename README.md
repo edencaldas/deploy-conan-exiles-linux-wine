@@ -41,7 +41,7 @@ Starting almalinux
 [root@almalinux ~]# ./deploy_conan_exiles_enterpriselinux8_wine.sh 
 ```
 
-After the process is done. Login as ```steam``` user and check wait for the ```LogServerStats: Sending report: exiles-stats?``` message to appear. That will mean the server is up and advertising to Funcom server browser screen.
+After the process is done. Login as ```steam``` user and wait for the ```LogServerStats: Sending report: exiles-stats?``` message to appear. That will mean the server is up and advertising to the Funcom server browser.
 
 ```
 [root@almalinux ~]# sudo -iu steam
