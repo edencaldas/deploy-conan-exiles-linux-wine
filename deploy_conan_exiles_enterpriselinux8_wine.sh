@@ -1,4 +1,4 @@
-#!/bib/bash
+#!/bin/bash
 
 # Tested on Almalinux 8 in a container with LXC or directly on a server host.
 
