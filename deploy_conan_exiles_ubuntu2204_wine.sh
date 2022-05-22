@@ -53,6 +53,7 @@ WantedBy=multi-user.target' > /etc/systemd/system/conan.service
 systemctl daemon-reload
 systemctl disable firewalld --now
 systemctl disable ufw --now
+systemctl disable ufw --now
 systemctl enable conan --now
 
 echo 'Instructions:
