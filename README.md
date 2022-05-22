@@ -2,9 +2,9 @@
 Simple (just works) script to install Conan Exiles with wine on a Linux container / VM / Baremetal
 
 This script can be ran as-is in:
-        Virtual Machines
-        LXC Containers
-        Baremetal
+- Virtual Machines
+- LXC Containers
+- Baremetal
 
 You will end up with a functional Conan Exiles Dedicate Server running on Linux with Wine.
 
@@ -28,3 +28,7 @@ For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec you
 - Install steamcmd and download conan exiles with it.
 - Setup a systemd unit file called ```conan``` and start it.
 - Create a readme file with further instructions.
+
+## Known issues
+
+Not an issue with the script, but with Conan Exiles and Wine in general. When it gets around 7.2GB-8GB of RAM, the server crashes, no matter how much RAM you have in your system. This is a widespread issue with Linux + Wine + Conan Exiles and currently there is no fix. Meaning running Conan Exiles Server in Linux only viable for small population servers. I'd say up to 10. The daily reboot would happen in time to save the server from a crash.
