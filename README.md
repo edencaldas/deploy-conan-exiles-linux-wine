@@ -75,6 +75,16 @@ iptables -I FORWARD -d yourcontainerip -p udp --dport 27015 -j ACCEPT
 iptables -I FORWARD -d yourcontainerip -p udp --dport 25575 -j ACCEPT
 ```
 
+### Recommended Setup
+Ubuntu 22.04 or Almalinux 8
+Close to 3Ghz Quad Core CPU. Could get away with Dual core for small playerbase.
+10GB of RAM. Could get away with 8GB with a very small playerbase.
+Conan Exiles uses SQLite and writes constantly to disk. This is what I observed regarding filesystems:
+- ext4 was ok up until 10 players, then started to crumble. The ```jbd2``` process was I/O waiting all the time.
+- ext4 with exclusive partition for the game with journaling disable was good, crumbled with close to 20 players.
+- xfs ran great, even with journaling enabled.
+- for LXC you might want to have an empty partition for your storage, and use btrfs or zfs.
+
 ## Known issues
 
 Not an issue with the script, but with Conan Exiles and Wine in general. When it gets around 7.2GB-8GB of RAM, the server crashes, no matter how much RAM you have in your system. This is a widespread issue with Linux + Wine + Conan Exiles and currently there is no fix. Meaning running Conan Exiles Server in Linux is only viable for small population servers. I'd say up to 10. The daily reboot would happen in time to save the server from a crash.
