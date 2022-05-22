@@ -1,4 +1,4 @@
-#!/bib/bash
+#!/bin/bash
 
 # Tested on Ubuntu 22.04 in a container with LXC or directly on a server host.
 
