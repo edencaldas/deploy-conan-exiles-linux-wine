@@ -3,7 +3,7 @@ Simple (just works) script to install Conan Exiles with wine on a Linux containe
 
 This script can be ran as-is in:
         Virtual Machines
-        LCX Containers
+        LXC Containers
         Baremetal
 
 You will end up with a functional Conan Exiles Dedicate Server running on Linux with Wine.
