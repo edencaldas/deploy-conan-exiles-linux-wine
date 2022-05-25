@@ -16,7 +16,7 @@ Since the scripts work with LXC, they also do for VMs and baremetal machines.
 
 ## Usage
 
-Download one of the ```deploy-conan-exiles-linux-wine.sh``` file.
+Download the ```deploy-conan-exiles-linux-wine.sh``` file.
 Login to your VM/Container/Machine and execute the script as root.
 Alternatively, if using Cloud (eg: AWS) you can put the script in your instance's userdata.
 For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec yourcontainer -- bash``` ) and execute the script.
