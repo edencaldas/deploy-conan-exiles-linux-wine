@@ -16,7 +16,7 @@ Since the scripts work with LXC, they also do for VMs and baremetal machines.
 
 ## Usage
 
-Download one of the ```deploy_conan_exiles_*.sh``` files appropriate to your linux distribution.
+Download one of the ```deploy-conan-exiles-linux-wine.sh``` file.
 Login to your VM/Container/Machine and execute the script as root.
 Alternatively, if using Cloud (eg: AWS) you can put the script in your instance's userdata.
 For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec yourcontainer -- bash``` ) and execute the script.
@@ -36,12 +36,12 @@ For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec you
 Creating almalinux
 Starting almalinux                        
 [ec2-user@host ~]$ lxc exec almalinux -- bash
-[root@almalinux ~]# curl -sSOJ https://raw.githubusercontent.com/edencaldas/deploy-conan-exiles-linux-wine/main/deploy_conan_exiles_enterpriselinux8_wine.sh
-[root@almalinux ~]# chmod +x deploy_conan_exiles_enterpriselinux8_wine.sh
-[root@almalinux ~]# ./deploy_conan_exiles_enterpriselinux8_wine.sh 
+[root@almalinux ~]# curl -sSOJ https://raw.githubusercontent.com/edencaldas/deploy-conan-exiles-linux-wine/main/deploy-conan-exiles-linux-wine.sh
+[root@almalinux ~]# chmod +x deploy-conan-exiles-linux-wine.sh
+[root@almalinux ~]# ./deploy-conan-exiles-linux-wine.sh
 ```
 
-After the process is done. Login as ```steam``` user and wait for the ```LogServerStats: Sending report: exiles-stats?``` message to appear. That will mean the server is up and advertising to the Funcom server browser.
+After the process is done. Login as steam user ```sudo -iu steam``` tail the log file and wait for the ```LogServerStats: Sending report: exiles-stats?``` message to appear. That will mean the server is up and advertising to the Funcom server browser. Example below:
 
 ```
 [root@almalinux ~]# sudo -iu steam
@@ -52,8 +52,6 @@ After the process is done. Login as ```steam``` user and wait for the ```LogServ
 ```
 
 ### Firewall settings
-
-The script will disable firewalld/ufw. Comment those line if that's undesirable. 
 
 If installed on host with firewall on. Open up ports:
 - 7777 UDP
@@ -78,7 +76,6 @@ iptables -I FORWARD -d yourcontainerip -p udp --dport 25575 -j ACCEPT
 ```
 
 ### Recommended Setup
-Ubuntu 22.04 or Almalinux 8
 Close to 3Ghz Quad Core CPU. Could get away with Dual core for small playerbase.
 10GB of RAM. Could get away with 8GB with a very small playerbase.
 Conan Exiles uses SQLite and writes constantly to disk. This is what I observed regarding filesystems:
