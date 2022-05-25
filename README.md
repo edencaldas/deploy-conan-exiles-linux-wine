@@ -23,7 +23,7 @@ For LXC, you can use cloud-init. Or you can just login as root ( ```lxc exec you
 
 ## The script will:
 
-- Install all required and usefl packages.
+- Install all required and useful packages.
 - Download mcrcon and discord.sh for server management and discord messages.
 - Install steamcmd and download conan exiles with it.
 - Setup a systemd unit file called ```conan``` and start it.
